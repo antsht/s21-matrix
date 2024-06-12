@@ -1,6 +1,6 @@
 SHELL:=/bin/bash
 CC=gcc
-CFLAGS=-c -Wall -Werror -Wextra -std=c11 -pedantic
+CFLAGS=-c -Wall -Werror -Wextra -std=c11 -pedantic -lm
 CFLAGS_BIN=$(subst -c ,,$(CFLAGS))
 TESTFLAGS=-fprofile-arcs -ftest-coverage
 LDFLAGS=
