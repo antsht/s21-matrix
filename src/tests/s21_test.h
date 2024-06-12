@@ -5,5 +5,8 @@
 
 int s21_create_matrix_test(void);
 int s21_remove_matrix_test(void);
+int s21_eq_matrix_test(void);
+int s21_sum_matrix_test(void);
+int s21_sub_matrix_test(void);
 
 #endif

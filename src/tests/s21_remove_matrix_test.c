@@ -4,19 +4,19 @@
 #include "s21_test.h"
 
 START_TEST(s21_remove_matrix_test_1) {
-    matrix_t m;
+    matrix_t A;
     Matrix_operation_result res = 0;
-    res = s21_create_matrix(1, 1, &m);
+    res = s21_create_matrix(1, 1, &A);
     ck_assert(res == OK);
-    s21_remove_matrix(&m);
-    ck_assert(m.matrix == NULL);
+    s21_remove_matrix(&A);
+    ck_assert(A.matrix == NULL);
 }
 END_TEST
 
 
 Suite *s21_remove_matrix_suite(void) {
     Suite *s;
-    s = suite_create("s21_matrix");
+    s = suite_create("s21_remove_matrix() tests");
     TCase *tc;
     tc = tcase_create("remove_matrix");
     tcase_add_test(tc, s21_remove_matrix_test_1);

@@ -4,41 +4,45 @@
 #include "s21_test.h"
 
 START_TEST(s21_create_matrix_test_1) {
-    matrix_t m;
+    matrix_t A;
     Matrix_operation_result res = 0;
-    res = s21_create_matrix(1, 1, &m);
-    ck_assert(res==OK && m.rows == 1 && m.columns==1 && m.matrix != NULL);
+    res = s21_create_matrix(1, 1, &A);
+    ck_assert(res==OK && A.rows == 1 && A.columns==1 && A.matrix != NULL);
+    s21_remove_matrix(&A);  
 }
 END_TEST
 
 START_TEST(s21_create_matrix_test_2) {
-    matrix_t m;
+    matrix_t A;
     Matrix_operation_result res = 0;
-    res = s21_create_matrix(1000, 1000, &m);
-    ck_assert(res == OK && m.rows == 1000 && m.columns == 1000 && m.matrix != NULL);
+    res = s21_create_matrix(1000, 1000, &A);
+    ck_assert(res == OK && A.rows == 1000 && A.columns == 1000 &&
+              A.matrix != NULL);
+    s21_remove_matrix(&A);
 }
 END_TEST
 
 START_TEST(s21_create_matrix_test_3) {
-    matrix_t m;
+    matrix_t A;
     Matrix_operation_result res = 0;
-    res = s21_create_matrix(0, 0, &m);
-    ck_assert(res == ERROR_INCORRECT_MATRIX &&
-              m.matrix == NULL);
+    res = s21_create_matrix(0, 0, &A);
+    ck_assert(res == ERROR_INCORRECT_MATRIX && A.matrix == NULL);
+    s21_remove_matrix(&A);
 }
 END_TEST
 
 START_TEST(s21_create_matrix_test_4) {
-    matrix_t m;
+    matrix_t A;
     Matrix_operation_result res = 0;
-    res = s21_create_matrix(-1, -1, &m);
-    ck_assert(res == ERROR_INCORRECT_MATRIX && m.matrix == NULL);
+    res = s21_create_matrix(-1, -1, &A);
+    ck_assert(res == ERROR_INCORRECT_MATRIX && A.matrix == NULL);
+    s21_remove_matrix(&A);
 }
 END_TEST
 
 Suite *s21_create_matrix_suite(void) {
   Suite *s;
-  s = suite_create("s21_matrix");
+  s = suite_create("s21_create_matrix() tests");
   TCase *tc;
   tc = tcase_create("create_matrix");
   tcase_add_test(tc, s21_create_matrix_test_1);
