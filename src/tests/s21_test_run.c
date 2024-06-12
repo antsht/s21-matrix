@@ -2,8 +2,8 @@
 
 int main(void) {
   int number_failed = 0;
-  number_failed = s21_matrix_test1();
-  number_failed += s21_matrix_test2();
+  number_failed = s21_create_matrix_test();
+  number_failed += s21_remove_matrix_test();
 
   return number_failed;
 }

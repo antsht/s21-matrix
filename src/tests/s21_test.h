@@ -1,7 +1,9 @@
 #ifndef _S21_TEST_H_
 #define _S21_TEST_H_
 
-int s21_matrix_test1(void);
-int s21_matrix_test2(void);
+#include "../s21_matrix.h"
+
+int s21_create_matrix_test(void);
+int s21_remove_matrix_test(void);
 
 #endif
