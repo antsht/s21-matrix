@@ -15,11 +15,12 @@ START_TEST(s21_sub_matrix_test_1) {
     matrix_t result;
     Matrix_operation_result res = 0;
     res = s21_sub_matrix(&A, &B, &result);
-    ck_assert(res == OK && s21_eq_matrix(&expected, &result) == SUCCESS);
+    int comp_res = s21_eq_matrix(&expected, &result);
     s21_remove_matrix(&A);
     s21_remove_matrix(&B);
     s21_remove_matrix(&result);
     s21_remove_matrix(&expected);
+    ck_assert(res == OK && comp_res == SUCCESS);
 }
 END_TEST
 
@@ -47,11 +48,12 @@ START_TEST(s21_sub_matrix_test_2) {
     res = s21_sub_matrix(&A, &B, &result);
     // s21_print_matrix(&result);
     // s21_print_matrix(&expected);
-    ck_assert(res == OK && s21_eq_matrix(&expected, &result) == SUCCESS);
+    int comp_res = s21_eq_matrix(&expected, &result);
     s21_remove_matrix(&A);
     s21_remove_matrix(&B);
     s21_remove_matrix(&result);
     s21_remove_matrix(&expected);
+    ck_assert(res == OK && comp_res == SUCCESS);
 }
 END_TEST
 
@@ -68,10 +70,10 @@ START_TEST(s21_sub_matrix_test_3) {
     matrix_t result;
     Matrix_operation_result res = 0;
     res = s21_sub_matrix(&A, &B, &result);
-    ck_assert(res == ERROR_INCORRECT_MATRIX);
     s21_remove_matrix(&A);
     s21_remove_matrix(&B);
     s21_remove_matrix(&result);
+    ck_assert(res == ERROR_INCORRECT_MATRIX);
 }
 END_TEST
 

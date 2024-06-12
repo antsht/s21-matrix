@@ -12,7 +12,7 @@ int s21_create_matrix(int rows, int columns, matrix_t* result) {
   if (result->matrix == NULL) status = ERROR_INCORRECT_MATRIX;
 
   for (int i = 0; i < rows && status == OK; i++) {
-    result->matrix[i] = (double*)malloc(columns * sizeof(double));
+    result->matrix[i] = (double*)calloc(columns, sizeof(double));
     if (result->matrix[i] == NULL) status = ERROR_INCORRECT_MATRIX;
   }
   if (status != OK) s21_remove_matrix(result);
@@ -44,7 +44,8 @@ int s21_eq_matrix(matrix_t* A, matrix_t* B) {
 
 int s21_s___matrix(matrix_t* A, matrix_t* B, int b_sign, matrix_t* result) {
   int status = OK;
-  if (!is_valid_matrix(A) ||!is_valid_matrix(B) || A->rows != B->rows || A->columns != B->columns) {
+  if (!is_valid_matrix(A) || !is_valid_matrix(B) || A->rows != B->rows ||
+      A->columns != B->columns) {
     status = ERROR_INCORRECT_MATRIX;
   }
   if (status == OK) {
@@ -68,10 +69,9 @@ int s21_sub_matrix(matrix_t* A, matrix_t* B, matrix_t* result) {
   return s21_s___matrix(A, B, -1, result);
 }
 
-int s21_mult_number(matrix_t *A, double number, matrix_t *result){
+int s21_mult_number(matrix_t* A, double number, matrix_t* result) {
   int status = OK;
-  if (!is_valid_matrix(A)) 
-    status = ERROR_INCORRECT_MATRIX;
+  if (!is_valid_matrix(A)) status = ERROR_INCORRECT_MATRIX;
   if (status == OK) {
     s21_remove_matrix(result);
     status = s21_create_matrix(A->rows, A->columns, result);
@@ -86,9 +86,26 @@ int s21_mult_number(matrix_t *A, double number, matrix_t *result){
 
   return status;
 }
+int s21_mult_matrix(matrix_t* A, matrix_t* B, matrix_t* result) {
+  int status = OK;
+  if (!is_valid_matrix(A) || !is_valid_matrix(B) || A->columns != B->rows)
+    status = ERROR_INCORRECT_MATRIX;
+  if (status == OK) {
+    s21_remove_matrix(result);
+    status = s21_create_matrix(A->rows, B->columns, result);
+  }
+  if (status == OK) {
+    for (int i = 0; i < A->rows; i++) {
+      for (int j = 0; j < B->columns; j++) {
+        for (int k = 0; k < A->columns; k++) {
+          result->matrix[i][j] += A->matrix[i][k] * B->matrix[k][j];
+        }
+      }
+    }
+  }
+  return status;
+}
 /*
-int s21_mult_matrix(matrix_t *A, matrix_t *B, matrix_t *result);
-
 int s21_transpose(matrix_t *A, matrix_t *result);
 
 int s21_calc_complements(matrix_t *A, matrix_t *result);
@@ -107,4 +124,6 @@ void s21_print_matrix(matrix_t* A) {
   }
 }
 
-bool is_valid_matrix(matrix_t* A) { return A != NULL && A->matrix != NULL && A->rows > 0 && A->columns > 0; }
+bool is_valid_matrix(matrix_t* A) {
+  return A != NULL && A->matrix != NULL && A->rows > 0 && A->columns > 0;
+}

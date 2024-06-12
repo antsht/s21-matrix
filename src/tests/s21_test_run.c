@@ -8,6 +8,7 @@ int main(void) {
   number_failed += s21_sum_matrix_test();
   number_failed += s21_sub_matrix_test();
   number_failed += s21_mult_number_test();
+  number_failed += s21_mult_matrix_test();
 
   return number_failed;
 }
