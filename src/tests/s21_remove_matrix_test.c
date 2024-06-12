@@ -7,8 +7,8 @@ START_TEST(s21_remove_matrix_test_1) {
     matrix_t A;
     Matrix_operation_result res = 0;
     res = s21_create_matrix(1, 1, &A);
-    ck_assert(res == OK);
     s21_remove_matrix(&A);
+    ck_assert(res == OK);
     ck_assert(A.matrix == NULL);
 }
 END_TEST

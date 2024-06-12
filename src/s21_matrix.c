@@ -20,7 +20,7 @@ int s21_create_matrix(int rows, int columns, matrix_t* result) {
 }
 
 void s21_remove_matrix(matrix_t* A) {
-  if (A != NULL) {
+  if (A != NULL && A->matrix != NULL) {
     for (int i = 0; i < A->rows; i++) {
       free(A->matrix[i]);
     }
@@ -49,7 +49,7 @@ int s21_s___matrix(matrix_t* A, matrix_t* B, int b_sign, matrix_t* result) {
     status = ERROR_INCORRECT_MATRIX;
   }
   if (status == OK) {
-    s21_remove_matrix(result);
+    // s21_remove_matrix(result);
     status = s21_create_matrix(A->rows, A->columns, result);
   }
   if (status == OK) {

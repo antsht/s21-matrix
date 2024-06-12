@@ -3,59 +3,61 @@
 #include "../s21_matrix.h"
 #include "s21_test.h"
 START_TEST(s21_mult_number_test_1) {
-    matrix_t A;
+    matrix_t A = {0};
     s21_create_matrix(1, 1, &A);
     A.matrix[0][0] = 1;
     matrix_t expected;
     s21_create_matrix(1, 1, &expected);
     expected.matrix[0][0] = 2;
-    matrix_t result;
+    matrix_t result = {0};
     Matrix_operation_result res = 0;
     res = s21_mult_number(&A, 2, &result);
-    ck_assert(res == OK && s21_eq_matrix(&expected, &result) == SUCCESS);
+    int comp_res = s21_eq_matrix(&expected, &result);
     s21_remove_matrix(&A);
     s21_remove_matrix(&result);
     s21_remove_matrix(&expected);
+    ck_assert(res == OK && comp_res == SUCCESS);
 }
 END_TEST
 
 START_TEST(s21_mult_number_test_2) {
-    matrix_t A;
+    matrix_t A = {0};
     s21_create_matrix(2, 2, &A);
     A.matrix[0][0] = 1;
     A.matrix[0][1] = 2;
     A.matrix[1][0] = 3;
     A.matrix[1][1] = 4;
-    matrix_t expected;
+    matrix_t expected = {0};
     s21_create_matrix(2, 2, &expected);
     expected.matrix[0][0] = 0.5;
     expected.matrix[0][1] = 1;
     expected.matrix[1][0] = 1.5;
     expected.matrix[1][1] = 2;
-    matrix_t result;
+    matrix_t result = {0};
     Matrix_operation_result res = 0;
     res = s21_mult_number(&A, 0.5, &result);
-    ck_assert(res == OK && s21_eq_matrix(&expected, &result) == SUCCESS);
+    int comp_res = s21_eq_matrix(&expected, &result);
     s21_remove_matrix(&A);
     s21_remove_matrix(&result);
     s21_remove_matrix(&expected);
+    ck_assert(res == OK && comp_res == SUCCESS);
 }
 END_TEST
 
 START_TEST(s21_mult_number_test_3) {
-    matrix_t A;
+    matrix_t A = {0};
     s21_create_matrix(2, 2, &A);
     A.matrix[0][0] = 1;
     A.matrix[0][1] = 2;
     A.matrix[1][0] = 3;
     A.matrix[1][1] = 4;
     A.columns = -1;
-    matrix_t result;
+    matrix_t result = {0};
     Matrix_operation_result res = 0;
     res = s21_mult_number(&A, 0, &result);
-    ck_assert(res == ERROR_INCORRECT_MATRIX);
     s21_remove_matrix(&A);
     s21_remove_matrix(&result);
+    ck_assert(res == ERROR_INCORRECT_MATRIX);
 }
 END_TEST
 
