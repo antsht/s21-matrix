@@ -10,6 +10,7 @@ int main(void) {
   number_failed += s21_mult_number_test();
   number_failed += s21_mult_matrix_test();
   number_failed += s21_transpose_test();
+  number_failed += s21_determinant_test();
 
   return number_failed;
 }
