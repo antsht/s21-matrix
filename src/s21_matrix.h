@@ -1,9 +1,10 @@
 #ifndef _MATRIX_H_
 #define _MATRIX_H_
 
+#include <float.h>
 #include <math.h>
-#include <stdio.h>
 #include <stdbool.h>
+#include <stdio.h>
 typedef struct matrix_struct {
   double** matrix;
   int rows;

@@ -15,8 +15,8 @@ END_TEST
 START_TEST(s21_create_matrix_test_2) {
     matrix_t A = {0};
     Matrix_operation_result res = 0;
-    res = s21_create_matrix(1000, 1000, &A);
-    ck_assert(res == OK && A.rows == 1000 && A.columns == 1000 &&
+    res = s21_create_matrix(10000, 10000, &A);
+    ck_assert(res == OK && A.rows == 10000 && A.columns == 10000 &&
               A.matrix != NULL);
     s21_remove_matrix(&A);
 }

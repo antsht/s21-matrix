@@ -153,9 +153,6 @@ int s21_determinant(matrix_t* A, double* result) {
   if (status == OK) {
     if (A->rows == 1) {
       *result = A->matrix[0][0];
-    } else if (A->rows == 2) {
-      *result =
-          A->matrix[0][0] * A->matrix[1][1] - A->matrix[0][1] * A->matrix[1][0];
     } else {
       *result = 0;
       int sign = 1;
@@ -165,7 +162,16 @@ int s21_determinant(matrix_t* A, double* result) {
         double minor_det = 0;
         status = s21_determinant(&minor, &minor_det);
         s21_remove_matrix(&minor);
-        if (status == OK) *result += sign * A->matrix[0][i] * minor_det;
+        if (status == OK) {
+          long double tmp_result = 0;
+          tmp_result = (long double)(*result) + (long double)A->matrix[0][i] *
+                                                    (long double)minor_det *
+                                                    sign;
+          if (tmp_result > DBL_MAX || tmp_result < -DBL_MAX)
+            status = CALCULATION_ERROR;
+          else
+            *result = (double)tmp_result;
+        }
         sign *= (-1);
       }
     }
