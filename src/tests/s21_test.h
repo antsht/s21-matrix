@@ -12,5 +12,6 @@ int s21_mult_number_test(void);
 int s21_mult_matrix_test(void);
 int s21_transpose_test(void);
 int s21_determinant_test(void);
+int s21_calc_complements_test(void);
 
 #endif

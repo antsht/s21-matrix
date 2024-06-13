@@ -167,7 +167,7 @@ int s21_determinant(matrix_t* A, double* result) {
           tmp_result = (long double)(*result) + (long double)A->matrix[0][i] *
                                                     (long double)minor_det *
                                                     sign;
-          if (tmp_result > DBL_MAX || tmp_result < -DBL_MAX)
+          if (fabsl(tmp_result) > DBL_MAX)
             status = CALCULATION_ERROR;
           else
             *result = (double)tmp_result;
@@ -180,11 +180,35 @@ int s21_determinant(matrix_t* A, double* result) {
   return status;
 }
 
-/*
-int s21_calc_complements(matrix_t *A, matrix_t *result);
+int s21_calc_complements(matrix_t* A, matrix_t* result) {
+  int status = OK;
+  if (A == result || !is_valid_matrix(A) ) {
+    status = ERROR_INCORRECT_MATRIX;
+  }
+  if (A->rows<2 || A->columns <2 || A->rows != A->columns) {
+    status = CALCULATION_ERROR;
+  }
+  if (status == OK) {
+    status = s21_create_matrix(A->rows, A->columns, result);
+  }
+  if (status == OK) {
+    for (int i = 0; i < A->rows && status == OK; i++) {
+      for (int j = 0; j < A->columns && status == OK; j++) {
+        matrix_t minor = {0};
+        s21_get_minor(A, i, j, &minor);
+        double minor_det = 0;
+        status = s21_determinant(&minor, &minor_det);
+        s21_remove_matrix(&minor);
+        if (status == OK) {
+          result->matrix[i][j] = pow(-1, i + j) * minor_det;
+        }
+      }
+    }
+  }
+  return status;
+}
 
-int s21_inverse_matrix(matrix_t *A, matrix_t *result);
-*/
+// int s21_inverse_matrix(matrix_t* A, matrix_t* result);
 
 void s21_print_matrix(matrix_t* A) {
   for (int i = 0; i < A->rows; i++) {
