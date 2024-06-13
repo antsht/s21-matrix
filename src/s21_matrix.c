@@ -76,7 +76,7 @@ int s21_sub_matrix(matrix_t* A, matrix_t* B, matrix_t* result) {
 
 int s21_mult_number(matrix_t* A, double number, matrix_t* result) {
   int status = OK;
-  if (!is_valid_matrix(A)) status = ERROR_INCORRECT_MATRIX;
+  if (A == result || !is_valid_matrix(A)) status = ERROR_INCORRECT_MATRIX;
   if (status == OK) {
     status = s21_create_matrix(A->rows, A->columns, result);
   }
@@ -92,7 +92,7 @@ int s21_mult_number(matrix_t* A, double number, matrix_t* result) {
 }
 int s21_mult_matrix(matrix_t* A, matrix_t* B, matrix_t* result) {
   int status = OK;
-  if (!is_valid_matrix(A) || !is_valid_matrix(B) || A->columns != B->rows)
+  if (A == result || B == result || !is_valid_matrix(A) || !is_valid_matrix(B) || A->columns != B->rows)
     status = ERROR_INCORRECT_MATRIX;
   if (status == OK) {
     status = s21_create_matrix(A->rows, B->columns, result);
@@ -108,9 +108,23 @@ int s21_mult_matrix(matrix_t* A, matrix_t* B, matrix_t* result) {
   }
   return status;
 }
-/*
-int s21_transpose(matrix_t *A, matrix_t *result);
+int s21_transpose(matrix_t *A, matrix_t *result){
+  int status = OK;
+  if (A == result || !is_valid_matrix(A)) status = ERROR_INCORRECT_MATRIX;
+  if (status == OK) {
+    status = s21_create_matrix(A->columns, A->rows, result);
+  }
+  if (status == OK) {
+    for (int i = 0; i < A->rows; i++) {
+      for (int j = 0; j < A->columns; j++) {
+        result->matrix[j][i] = A->matrix[i][j];
+      }
+    }
+  }
+  return status;
+}
 
+/*
 int s21_calc_complements(matrix_t *A, matrix_t *result);
 
 int s21_determinant(matrix_t *A, double *result);
