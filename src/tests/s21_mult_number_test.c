@@ -6,7 +6,7 @@ START_TEST(s21_mult_number_test_1) {
     matrix_t A = {0};
     s21_create_matrix(1, 1, &A);
     A.matrix[0][0] = 1;
-    matrix_t expected;
+    matrix_t expected = {0};
     s21_create_matrix(1, 1, &expected);
     expected.matrix[0][0] = 2;
     matrix_t result = {0};

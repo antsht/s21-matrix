@@ -9,7 +9,7 @@ START_TEST(s21_sub_matrix_test_1) {
     matrix_t B = {0};
     s21_create_matrix(1, 1, &B);
     B.matrix[0][0] = 1;
-    matrix_t expected;
+    matrix_t expected = {0};
     s21_create_matrix(1, 1, &expected);
     expected.matrix[0][0] = 0;
     matrix_t result = {0};

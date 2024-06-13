@@ -4,23 +4,23 @@
 #include "s21_test.h"
 
 START_TEST(s21_eq_matrix_test_1) {
-    matrix_t A;
-    s21_create_matrix(1, 1, &A);
-    A.matrix[0][0] = 1;
-    matrix_t B;
-    s21_create_matrix(1, 1, &B);
-    B.matrix[0][0] = 1;
-    ck_assert(s21_eq_matrix(&A, &B) == SUCCESS);
-    s21_remove_matrix(&A);
-    s21_remove_matrix(&B);
+  matrix_t A = {0};
+  s21_create_matrix(1, 1, &A);
+  A.matrix[0][0] = 1;
+  matrix_t B = {0};
+  s21_create_matrix(1, 1, &B);
+  B.matrix[0][0] = 1;
+  ck_assert(s21_eq_matrix(&A, &B) == SUCCESS);
+  s21_remove_matrix(&A);
+  s21_remove_matrix(&B);
 }
 END_TEST
 
 START_TEST(s21_eq_matrix_test_2) {
-    matrix_t A;
+    matrix_t A = {0};
     s21_create_matrix(1, 1, &A);
     A.matrix[0][0] = 1;
-    matrix_t B;
+    matrix_t B = {0};
     s21_create_matrix(1, 1, &B);
     B.matrix[0][0] = 2;
     ck_assert(s21_eq_matrix(&A, &B) == FAILURE);
@@ -30,10 +30,10 @@ START_TEST(s21_eq_matrix_test_2) {
 END_TEST
 
 START_TEST(s21_eq_matrix_test_3) {
-    matrix_t A;
+    matrix_t A = {0};
     s21_create_matrix(1, 1, &A);
     A.matrix[0][0] = 1.000001;
-    matrix_t B;
+    matrix_t B = {0};
     s21_create_matrix(1, 1, &B);
     B.matrix[0][0] = 1.000002;
     ck_assert(s21_eq_matrix(&A, &B) == FAILURE);
@@ -43,10 +43,10 @@ START_TEST(s21_eq_matrix_test_3) {
 END_TEST
 
 START_TEST(s21_eq_matrix_test_4) {
-    matrix_t A;
+    matrix_t A = {0};
     s21_create_matrix(1, 1, &A);
     A.matrix[0][0] = 1.0000001;
-    matrix_t B;
+    matrix_t B = {0};
     s21_create_matrix(1, 1, &B);
     B.matrix[0][0] = 1.0000002;
     ck_assert(s21_eq_matrix(&A, &B) == SUCCESS);
@@ -56,11 +56,11 @@ START_TEST(s21_eq_matrix_test_4) {
 END_TEST
 
 START_TEST(s21_eq_matrix_test_5) {
-    matrix_t A;
+    matrix_t A = {0};
     s21_create_matrix(2, 1, &A);
     A.matrix[0][0] = 1;
     A.matrix[1][0] = 2;
-    matrix_t B;
+    matrix_t B = {0};
     s21_create_matrix(1, 2, &B);
     B.matrix[0][0] = 1;
     B.matrix[0][1] = 2;
@@ -71,7 +71,7 @@ START_TEST(s21_eq_matrix_test_5) {
 END_TEST
 
 START_TEST(s21_eq_matrix_test_6) {
-    matrix_t A;
+    matrix_t A = {0};
     s21_create_matrix(3, 3, &A);
     A.matrix[0][0] = 1;
     A.matrix[0][1] = 2;
@@ -83,7 +83,7 @@ START_TEST(s21_eq_matrix_test_6) {
     A.matrix[2][1] = 8;
     A.matrix[2][2] = 9;
 
-    matrix_t B;
+    matrix_t B = {0};
     s21_create_matrix(3, 3, &B);
     B.matrix[0][0] = 1;
     B.matrix[0][1] = 2;

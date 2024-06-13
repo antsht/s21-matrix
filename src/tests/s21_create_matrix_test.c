@@ -4,7 +4,7 @@
 #include "s21_test.h"
 
 START_TEST(s21_create_matrix_test_1) {
-    matrix_t A;
+    matrix_t A = {0};
     Matrix_operation_result res = 0;
     res = s21_create_matrix(1, 1, &A);
     ck_assert(res==OK && A.rows == 1 && A.columns==1 && A.matrix != NULL);
@@ -13,7 +13,7 @@ START_TEST(s21_create_matrix_test_1) {
 END_TEST
 
 START_TEST(s21_create_matrix_test_2) {
-    matrix_t A;
+    matrix_t A = {0};
     Matrix_operation_result res = 0;
     res = s21_create_matrix(1000, 1000, &A);
     ck_assert(res == OK && A.rows == 1000 && A.columns == 1000 &&
@@ -23,7 +23,7 @@ START_TEST(s21_create_matrix_test_2) {
 END_TEST
 
 START_TEST(s21_create_matrix_test_3) {
-    matrix_t A;
+    matrix_t A = {0};
     Matrix_operation_result res = 0;
     res = s21_create_matrix(0, 0, &A);
     ck_assert(res == ERROR_INCORRECT_MATRIX && A.matrix == NULL);
@@ -32,7 +32,7 @@ START_TEST(s21_create_matrix_test_3) {
 END_TEST
 
 START_TEST(s21_create_matrix_test_4) {
-    matrix_t A;
+    matrix_t A = {0};
     Matrix_operation_result res = 0;
     res = s21_create_matrix(-1, -1, &A);
     ck_assert(res == ERROR_INCORRECT_MATRIX && A.matrix == NULL);

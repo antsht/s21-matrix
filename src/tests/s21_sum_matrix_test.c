@@ -9,16 +9,13 @@ START_TEST(s21_sum_matrix_test_1) {
     matrix_t B = {0};
     s21_create_matrix(1, 1, &B);
     B.matrix[0][0] = 1;
-    matrix_t expected;
+    matrix_t expected = {0};
     s21_create_matrix(1, 1, &expected);
     expected.matrix[0][0] = 2;
-    matrix_t result;
+    matrix_t result = {0};
     Matrix_operation_result res = 0;
     res = s21_sum_matrix(&A, &B, &result);
     int comp_res = s21_eq_matrix(&expected, &result);
-
-    // s21_print_matrix(&result);
-    // s21_print_matrix(&expected);
     s21_remove_matrix(&A);
     s21_remove_matrix(&B);
     s21_remove_matrix(&result);
@@ -49,8 +46,6 @@ START_TEST(s21_sum_matrix_test_2) {
     matrix_t result = {0};
     Matrix_operation_result res = 0;
     res = s21_sum_matrix(&A, &B, &result);
-    // s21_print_matrix(&result);
-    // s21_print_matrix(&expected);
     int comp_res = s21_eq_matrix(&expected, &result);
     s21_remove_matrix(&A);
     s21_remove_matrix(&B);
@@ -61,13 +56,37 @@ START_TEST(s21_sum_matrix_test_2) {
 END_TEST
 
 START_TEST(s21_sum_matrix_test_3) {
-    matrix_t A;
+    matrix_t A = {0};
     s21_create_matrix(2, 2, &A);
     A.matrix[0][0] = 1;
     A.matrix[0][1] = 2;
     A.matrix[1][0] = 3;
     A.matrix[1][1] = 4;
-    matrix_t B;
+    matrix_t expected = {0};
+    s21_create_matrix(2, 2, &expected);
+    expected.matrix[0][0] = 2;
+    expected.matrix[0][1] = 4;
+    expected.matrix[1][0] = 6;
+    expected.matrix[1][1] = 8;
+    matrix_t result = {0};
+    Matrix_operation_result res = 0;
+    res = s21_sum_matrix(&A, &A, &result);
+    int comp_res = s21_eq_matrix(&expected, &result);
+    s21_remove_matrix(&A);
+    s21_remove_matrix(&result);
+    s21_remove_matrix(&expected);
+    ck_assert(res == OK && comp_res == SUCCESS);
+}
+END_TEST
+
+START_TEST(s21_sum_matrix_test_4) {
+    matrix_t A = {0};
+    s21_create_matrix(2, 2, &A);
+    A.matrix[0][0] = 1;
+    A.matrix[0][1] = 2;
+    A.matrix[1][0] = 3;
+    A.matrix[1][1] = 4;
+    matrix_t B = {0};
     s21_create_matrix(1, 1, &B);
     B.matrix[0][0] = 1;
     matrix_t result = {0};
@@ -80,6 +99,20 @@ START_TEST(s21_sum_matrix_test_3) {
 }
 END_TEST
 
+START_TEST(s21_sum_matrix_test_5) {
+    matrix_t A = {0};
+    s21_create_matrix(2, 2, &A);
+    A.matrix[0][0] = 1;
+    A.matrix[0][1] = 2;
+    A.matrix[1][0] = 3;
+    A.matrix[1][1] = 4;
+    Matrix_operation_result res = 0;
+    res = s21_sum_matrix(&A, &A, &A);
+    s21_remove_matrix(&A);
+    ck_assert(res == ERROR_INCORRECT_MATRIX);
+}
+END_TEST
+
 Suite *s21_sum_matrix_suite(void) {
   Suite *s;
   s = suite_create("s21_sum_matrix() tests");
@@ -88,6 +121,8 @@ Suite *s21_sum_matrix_suite(void) {
   tcase_add_test(tc, s21_sum_matrix_test_1);
   tcase_add_test(tc, s21_sum_matrix_test_2);
   tcase_add_test(tc, s21_sum_matrix_test_3);
+  tcase_add_test(tc, s21_sum_matrix_test_4);
+  tcase_add_test(tc, s21_sum_matrix_test_5);
   suite_add_tcase(s, tc);
   return s;
 }
