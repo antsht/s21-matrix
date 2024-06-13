@@ -47,6 +47,6 @@ int s21_inverse_matrix(matrix_t *A, matrix_t *result);
 
 void s21_print_matrix(matrix_t *A);
 
-bool is_valid_matrix(matrix_t *A);
+bool s21_is_valid_matrix(matrix_t *A);
 
 #endif
