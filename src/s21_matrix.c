@@ -3,6 +3,7 @@
 #include <stdlib.h>
 
 int s21_create_matrix(int rows, int columns, matrix_t* result) {
+  s21_remove_matrix(result);
   result->rows = rows;
   result->columns = columns;
   result->matrix = NULL;
@@ -32,11 +33,16 @@ void s21_remove_matrix(matrix_t* A) {
 int s21_eq_matrix(matrix_t* A, matrix_t* B) {
   int result = SUCCESS;
   if (!is_valid_matrix(A) || !is_valid_matrix(B) || A->rows != B->rows ||
-      A->columns != B->columns)
+      A->columns != B->columns) {
     result = FAILURE;
-  for (int i = 0; i < A->rows && result == SUCCESS; i++) {
-    for (int j = 0; j < A->columns && result == SUCCESS; j++) {
-      if (fabs(A->matrix[i][j] - B->matrix[i][j]) > EPSILON) result = FAILURE;
+  }
+  if (A != B) {
+    for (int i = 0; i < A->rows && result == SUCCESS; i++) {
+      for (int j = 0; j < A->columns && result == SUCCESS; j++) {
+        if (fabs(A->matrix[i][j] - B->matrix[i][j]) > EPSILON) {
+          result = FAILURE;
+        }
+      }
     }
   }
   return result;
@@ -44,12 +50,11 @@ int s21_eq_matrix(matrix_t* A, matrix_t* B) {
 
 int s21_s___matrix(matrix_t* A, matrix_t* B, int b_sign, matrix_t* result) {
   int status = OK;
-  if (!is_valid_matrix(A) || !is_valid_matrix(B) || A->rows != B->rows ||
-      A->columns != B->columns) {
+  if (A == result || B == result || !is_valid_matrix(A) ||
+      !is_valid_matrix(B) || A->rows != B->rows || A->columns != B->columns) {
     status = ERROR_INCORRECT_MATRIX;
   }
   if (status == OK) {
-    // s21_remove_matrix(result);
     status = s21_create_matrix(A->rows, A->columns, result);
   }
   if (status == OK) {
@@ -73,7 +78,6 @@ int s21_mult_number(matrix_t* A, double number, matrix_t* result) {
   int status = OK;
   if (!is_valid_matrix(A)) status = ERROR_INCORRECT_MATRIX;
   if (status == OK) {
-    s21_remove_matrix(result);
     status = s21_create_matrix(A->rows, A->columns, result);
   }
   if (status == OK) {
@@ -91,7 +95,6 @@ int s21_mult_matrix(matrix_t* A, matrix_t* B, matrix_t* result) {
   if (!is_valid_matrix(A) || !is_valid_matrix(B) || A->columns != B->rows)
     status = ERROR_INCORRECT_MATRIX;
   if (status == OK) {
-    s21_remove_matrix(result);
     status = s21_create_matrix(A->rows, B->columns, result);
   }
   if (status == OK) {
