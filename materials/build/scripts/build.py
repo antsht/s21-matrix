@@ -9,7 +9,7 @@ build_stdout = sys.stdout
 part = sys.argv[1]
 
 
-def build_static_library(library_dir='src', stage='s21_string.a'):
+def build_static_library(library_dir='src', stage='s21_matrix.a'):
     try:
         build_result = subprocess.run(['make', stage],
                                       stderr=build_stderr, stdout=build_stdout, text=True,

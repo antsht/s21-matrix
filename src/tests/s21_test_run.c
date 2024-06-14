@@ -11,6 +11,12 @@ int main(void) {
   number_failed += s21_mult_matrix_test();
   number_failed += s21_transpose_test();
   number_failed += s21_determinant_test();
+  number_failed += s21_calc_complements_test();
+  number_failed += s21_inverse_matrix_test();
+  number_failed += s21_misc_test();
+  printf("====================\n\n");
+  printf("Total errors: %d\n\n", number_failed);
+  printf("====================\n\n");
 
-  return number_failed;
+  return number_failed > 0;
 }
