@@ -1,6 +1,6 @@
 SHELL:=/bin/bash
 CC=gcc
-CFLAGS=-c -Wall -Werror -Wextra -std=c11 -pedantic -lm
+CFLAGS=-c -Wall -Werror -Wextra -std=c11 -pedantic 
 CFLAGS_BIN=$(subst -c ,,$(CFLAGS))
 TESTFLAGS=-fprofile-arcs -ftest-coverage
 LDFLAGS=
@@ -26,6 +26,14 @@ check:
 	clang-format -n tests/*.c
 	clang-format -n tests/*.h
 
+.PHONY: check_fix
+check_fix:
+	cppcheck --enable=all --suppress=missingIncludeSystem ./
+	clang-format -i *.c
+	clang-format -i *.h
+	clang-format -i tests/*.c
+	clang-format -i tests/*.h
+
 .PHONY: $(LIBNAME)
 $(LIBNAME): build clean
 
@@ -40,7 +48,7 @@ test: build clean
 ifeq ($(S21_DEBUG),true)   
 	./tests/tests
 else
-	valgrind -q -s --leak-check=full --trace-children=yes --track-origins=yes --log-file=RESULT_VALGRIND.txt ./tests/tests
+	valgrind -q -s --leak-check=full --trace-children=yes --show-leak-kinds=all --track-origins=yes  --log-file=RESULT_VALGRIND.txt ./tests/tests
 endif
 
 .PHONY: clean
